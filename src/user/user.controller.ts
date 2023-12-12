@@ -34,4 +34,9 @@ export class UserController {
     async update(@Param("id") id: number, @Body() updateUserDto: updateUserDto){
         return this.userService.update(id, updateUserDto);
     }
+
+    @Delete(":id")
+    async remove(@Param("id") id: number){
+        return this.userService.remove(id);
+    }
 }
