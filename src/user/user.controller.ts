@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Delete, UseGuards } from '@nestjs/common';
 import { createUserDto, updateUserDto } from './dto/user.dto';
 import { UserService } from './user.service';
 import { CommentService } from 'src/comment/comment.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -25,6 +26,7 @@ export class UserController {
         return this.userService.create(body);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(":id/comment")
     async getUserComment(@Param("id") id: string){
         return this.commentService.findUserComment(id);
